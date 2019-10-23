@@ -1,0 +1,88 @@
+<html lang=en>
+
+<head>
+	<title> RPi + 7seg </title>
+</head>
+
+<body>
+	<div>
+		<button type="submit" id="clear">Borrar</button>
+	</div>
+	<div>
+		<input type="text" id="char" placeholder="[0-9] or [A-F]">
+		<button type="submit" id="send-char">Enviar</button>
+	</div>
+	
+	<div>
+		<button type="submit" id="flip-segment-a">a</button>
+		<button type="submit" id="flip-segment-b">b</button>
+		<button type="submit" id="flip-segment-c">c</button>
+		<button type="submit" id="flip-segment-d">d</button>
+		<button type="submit" id="flip-segment-e">e</button>
+		<button type="submit" id="flip-segment-f">f</button>
+		<button type="submit" id="flip-segment-g">g</button>
+		<button type="submit" id="flip-segment-dp">dp</button>
+	</div>
+	
+	<script>
+		function writeChar(ch) {
+			fetch('/char', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json; charset=utf-8'
+				},
+				body: ch
+			}).then(response => {
+				return response.json();
+			}).then(json => {
+				console.log(json);
+			});
+		}
+		function flipSegment(id) {
+			fetch('/segment', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json; charset=utf-8'
+				},
+				body: id
+			}).then(response => {
+				return response.json();
+			}).then(json => {
+				console.log(json);
+			});
+		}
+		document.getElementById('send-char').addEventListener('click', (event) => {
+			writeChar(document.getElementById('char').value);
+		});
+		document.getElementById('clear').addEventListener('click', (event) => {
+			writeChar(' ');
+			uncheckBoxes();
+		});
+		document.getElementById('flip-segment-a').addEventListener('click', function (event) {
+			flipSegment('a');
+		});
+		document.getElementById('flip-segment-b').addEventListener('click', function (event) {
+			flipSegment('b');
+		});
+		document.getElementById('flip-segment-c').addEventListener('click', function (event) {
+			flipSegment('c');
+		});
+		document.getElementById('flip-segment-d').addEventListener('click', function (event) {
+			flipSegment('d');
+		});
+		document.getElementById('flip-segment-e').addEventListener('click', function (event) {
+			flipSegment('e');
+		});
+		document.getElementById('flip-segment-f').addEventListener('click', function (event) {
+			flipSegment('f');
+		});
+		document.getElementById('flip-segment-g').addEventListener('click', function (event) {
+			flipSegment('g');
+		});
+		document.getElementById('flip-segment-dp').addEventListener('click', function (event) {
+			flipSegment('dp');
+		});
+	</script>
+</body>
+
+</html>
